@@ -380,7 +380,10 @@ def desenhar_texto(surface, texto, tamanho, x, y, cor=settings.BRANCO, font_name
 
 def desenhar_botao(surface, rect, texto):
     mouse_pos = pygame.mouse.get_pos()
-    cor_fundo = settings.COR_BOTAO_HOVER if rect.collidepoint(mouse_pos) else settings.CINZA#tira esse operador ternário
+    if rect.collidepoint(mouse_pos):
+        cor_fundo = settings.COR_BOTAO_HOVER
+    else:
+        cor_fundo = settings.CINZA
     
     pygame.draw.rect(surface, cor_fundo, rect, border_radius=10)
     desenhar_texto(surface, texto, 40, rect.centerx, rect.centery, settings.PRETO)
