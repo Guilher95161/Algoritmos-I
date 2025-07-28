@@ -199,6 +199,9 @@ class Tanque(pygame.sprite.Sprite):
             bala = Projetil(pos_x, pos_y, angulo_tiro, self.jogador_id)
             balas_grupo.add(bala)
 
+            # Toca o som de tiro
+            som_tiro.play()
+
             # Caso o tanque não esteja no modo assistente, ativa o recuo
             if not modo_assistente:
                 # Ativa o recuo do tanque
@@ -295,6 +298,8 @@ class Projetil(pygame.sprite.Sprite):
         
         # Se bala sai do retangulo da tela(para de colidir com a tela), remove do grupo
         if not self.rect.colliderect(tela_rect):
+            #Som da explosão
+            som_explosao.play()
             self.kill()
 
     # Método para atualizar a bala
@@ -325,6 +330,8 @@ def verificar_colisoes_bala_bala(balas_grupo):
                 # Verifica se ainda estão no grupo (não foram removidas)
                 if bala1 in balas_grupo and bala2 in balas_grupo:
                     if pygame.sprite.collide_mask(bala1, bala2):
+                        #Som da explosão
+                        som_explosao.play()
                         # Remove ambas as balas
                         bala1.kill()
                         bala2.kill()
@@ -335,14 +342,18 @@ def verificar_colisoes_bala_tanque(balas_grupo, tanques_grupo, modo_assistente=F
     Verifica colisões entre balas e tanques
     Se uma bala colide com um tanque, a bala é removida e o tanque leva dano ou morre
     '''
+    balas_lista = list(balas_grupo)
+    tanques_lista = list(tanques_grupo)
     # Loop por cada bala no grupo de balas
-    for bala in balas_grupo:
+    for bala in balas_lista:
         # loop por cada tanque no grupo de tanques
-        for tanque in tanques_grupo:
+        for tanque in tanques_lista:
             # Verifica se a bala não é do mesmo jogador do tanque e se o tanque está vivo
             if bala.jogador_id != tanque.jogador_id and tanque.vivo:
                 # Verifica se a bala colide com o tanque usando a máscara
                 if pygame.sprite.collide_mask(bala, tanque):
+                    #Som da explosão
+                    som_explosao.play()
                     # Remove a bala do grupo
                     bala.kill()
                     # Se o modo assistente estiver ativo, o tanque leva dano
@@ -433,8 +444,16 @@ clock = pygame.time.Clock()
 
 # Carrega a música de fundo
 pygame.mixer.music.load("audios//musica_fundo.mp3")
-pygame.mixer.music.set_volume(settings.VOLUME)
+pygame.mixer.music.set_volume(settings.VOLUME) # 30% do volume máximo
 pygame.mixer.music.play(-1)
+
+# Carrega os efeitos sonoros
+som_tiro = pygame.mixer.Sound("audios//som_tiro.mp3")  # ou .mp3
+som_explosao = pygame.mixer.Sound("audios//som_explosao.mp3")  # ou .mp3
+
+# Ajusta o volume dos efeitos sonoros (opcional)
+som_tiro.set_volume(settings.VOLUME+0.3)  # 60% do volume máximo
+som_explosao.set_volume(settings.VOLUME+0.3)  # 60% do volume máximo
 
 # Instâncias dos tanques
 tanque1 = Tanque(200, settings.ALTURA / 2, 0, settings.CONTROLE_1, "imagens//tanque_verde.png", "imagens//tanque_morto.png", 1)
