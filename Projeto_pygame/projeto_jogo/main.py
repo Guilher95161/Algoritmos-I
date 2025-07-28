@@ -241,6 +241,8 @@ class Tanque(pygame.sprite.Sprite):
 
     #Metodo para resetar o tanque
     def reset(self):
+        self.velocidade_recuo = settings.VELOCIDADE_RECUO
+        self.velocidade = settings.VELOCIDADE_TANQUE
         self.x = self.pos_inicial_x
         self.y = self.pos_inicial_y
         self.angulo = self.angulo_inicial
@@ -578,8 +580,8 @@ while rodando:
             tanque1.velocidade = 0
             tanque1.pode_atirar = 0
         # Atualiza os tanques para mostrar imagem de morto
-            tanques_sprites.update(balas_sprites)
-            balas_sprites.update()
+        tanques_sprites.update(balas_sprites)
+        balas_sprites.update()
 
         # Desenha os tanques e as balas na tela
         tanques_sprites.draw(tela)
