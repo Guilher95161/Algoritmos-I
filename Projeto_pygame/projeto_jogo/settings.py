@@ -52,4 +52,4 @@ CONTROLE_2 = {
 }
 
 # Configurações de áudio
-VOLUME = 0.3
+VOLUME = 0.1

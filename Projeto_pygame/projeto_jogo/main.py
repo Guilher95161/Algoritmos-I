@@ -457,8 +457,8 @@ som_tiro = pygame.mixer.Sound("audios//som_tiro.mp3")  # ou .mp3
 som_explosao = pygame.mixer.Sound("audios//som_explosao.mp3")  # ou .mp3
 
 # Ajusta o volume dos efeitos sonoros (opcional)
-som_tiro.set_volume(settings.VOLUME+0.3)  # 60% do volume máximo
-som_explosao.set_volume(settings.VOLUME+0.3)  # 60% do volume máximo
+som_tiro.set_volume(settings.VOLUME+0.1)  # 40% do volume máximo
+som_explosao.set_volume(settings.VOLUME+0.1)  # 40% do volume máximo
 
 # Instâncias dos tanques
 tanque1 = Tanque(200, settings.ALTURA / 2, 0, settings.CONTROLE_1, "imagens//tanque_verde.png", "imagens//tanque_morto.png", 1)
